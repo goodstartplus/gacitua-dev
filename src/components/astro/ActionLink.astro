@@ -1,0 +1,20 @@
+---
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary';
+  label: string;
+}
+
+const { href, variant = 'secondary', label } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    'action-link',
+    'focus-visible:outline-none',
+    variant === 'primary' ? 'action-link-primary' : 'action-link-secondary',
+  ]}
+>
+  {label}
+</a>

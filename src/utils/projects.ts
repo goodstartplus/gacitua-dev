@@ -10,6 +10,11 @@ const byOrderAndYearDesc = (a: Project, b: Project) => {
 
 export async function getProjectsByLocale(locale: ProjectLocale) {
   const projects = await getCollection('projects', ({ data }) => !data.draft && data.locale === locale);
+  console.log('[projects] getProjectsByLocale', {
+    locale,
+    total: projects.length,
+    slugs: projects.map((project) => ({ slug: project.data.slug, locale: project.data.locale, draft: project.data.draft })),
+  });
   return projects.sort(byOrderAndYearDesc);
 }
 
@@ -26,4 +31,9 @@ export async function getProjectBySlug(locale: ProjectLocale, slug: string) {
 export async function getProjectsByType(locale: ProjectLocale, type: Project['data']['type']) {
   const projects = await getProjectsByLocale(locale);
   return projects.filter((project) => project.data.type === type);
+}
+
+export async function getRelatedProjects(locale: ProjectLocale, currentSlug: string, limit = 3) {
+  const projects = await getProjectsByLocale(locale);
+  return projects.filter((project) => project.data.slug !== currentSlug).slice(0, limit);
 }

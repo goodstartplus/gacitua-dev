@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ProjectCard from '../../../components/astro/ProjectCard.astro';
+import ProjectsFilter from '../../../components/react/ProjectsFilter';
+import SectionHeading from '../../../components/astro/SectionHeading.astro';
+import { ui } from '../../../utils/i18n';
+import { getProjectsByLocale } from '../../../utils/projects';
+
+const page = ui.en.pages.projects;
+const projects = await getProjectsByLocale('en');
+const groups = Array.from(new Set(projects.map((project) => project.data.type)));
+const filterProjects = projects.map((project) => ({ slug: project.data.slug, type: project.data.type, status: project.data.status }));
+
+console.log('[page] /en/projects', {
+  totalProjects: projects.length,
+  groups,
+  slugs: projects.map((project) => project.data.slug),
+});
+---
+
+<BaseLayout lang="en" title={page.title} description={page.description}>
+  <section class="page-container section-spacing px-6 pt-14">
+    <SectionHeading eyebrow={page.eyebrow} title={page.heading} description={page.description} />
+    <p class="body-copy mt-6 max-w-3xl">{page.intro}</p>
+    <div class="mt-6 flex flex-wrap gap-2">
+      {groups.map((group) => (
+        <span class="pill">{group}</span>
+      ))}
+    </div>
+    <ProjectsFilter client:load projects={filterProjects} locale="en" />
+    <div class="mt-10 grid-instagram">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+</BaseLayout>

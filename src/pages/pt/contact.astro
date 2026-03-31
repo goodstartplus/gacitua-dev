@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/astro/SectionHeading.astro';
+import ActionLink from '../../components/astro/ActionLink.astro';
+import { ui } from '../../utils/i18n';
+
+const page = ui.pt.pages.contact;
+---
+
+<BaseLayout lang="pt" title={page.title} description={page.description}>
+  <section class="page-container section-spacing px-6 pt-14">
+    <SectionHeading eyebrow={page.eyebrow} title={page.heading} description={page.description} />
+    <div class="mt-10 surface-panel rounded-[2rem] p-6 md:p-8">
+      <p class="body-copy max-w-2xl">{page.body}</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <ActionLink href="mailto:hello@example.com" variant="primary" label="hello@example.com" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

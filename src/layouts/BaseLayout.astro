@@ -1,17 +1,28 @@
 ---
 import '../styles/global.css';
+import { getLocaleFromPath, swapLocalePath, ui } from '../utils/i18n';
 
 interface Props {
   title?: string;
   description?: string;
   lang?: 'en' | 'pt';
+  ogImage?: string;
 }
 
 const {
   title = 'gacitua.dev',
   description = 'Bilingual profile and project archive for André Gacitua.',
   lang = 'en',
+  ogImage = '/images/profile/andre-gacitua.jpeg',
 } = Astro.props;
+
+const navLabels = ui[lang].nav;
+const pathname = Astro.url.pathname;
+const currentLocale = getLocaleFromPath(pathname);
+const alternateLocale = currentLocale === 'en' ? 'pt' : 'en';
+const alternatePath = swapLocalePath(pathname, alternateLocale);
+const canonicalUrl = Astro.url.href;
+const ogImageUrl = new URL(ogImage, Astro.url).href;
 ---
 
 <!doctype html>
@@ -21,18 +32,41 @@ const {
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang={lang} href={canonicalUrl} />
+    <link rel="alternate" hreflang={alternateLocale} href={new URL(alternatePath, Astro.url).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL('/en/', Astro.url).href} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="gacitua.dev" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content={lang === 'pt' ? 'pt_BR' : 'en_US'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <title>{title}</title>
   </head>
-  <body class="bg-neutral-950 text-neutral-50">
-    <div class="min-h-screen">
-      <header class="border-b border-white/10">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="/" class="text-sm font-semibold tracking-[0.2em] uppercase">gacitua.dev</a>
-          <nav class="flex gap-4 text-sm text-neutral-300">
-            <a href="/en/">EN</a>
-            <a href="/pt/">PT</a>
+  <body>
+    <div class="page-shell">
+      <header class="sticky top-0 z-30 border-b border-white/10 bg-black/40 backdrop-blur-xl">
+        <div class="page-container flex items-center justify-between px-6 py-4">
+          <div class="flex items-center gap-6">
+            <a href="/" class="text-sm font-semibold tracking-[0.24em] uppercase text-white">gacitua.dev</a>
+            <nav class="hidden gap-4 text-sm text-neutral-400 md:flex">
+              <a class="rounded-full px-2 py-1 hover:bg-white/6" href={lang === 'en' ? '/en/' : '/pt/'}>{navLabels.home}</a>
+              <a class="rounded-full px-2 py-1 hover:bg-white/6" href={lang === 'en' ? '/en/projects/' : '/pt/projects/'}>{navLabels.projects}</a>
+              <a class="rounded-full px-2 py-1 hover:bg-white/6" href={lang === 'en' ? '/en/stack' : '/pt/stack'}>{navLabels.stack}</a>
+            </nav>
+          </div>
+          <nav class="flex gap-2 text-sm text-neutral-300">
+            <a class="rounded-full border border-white/10 px-3 py-1.5 hover:bg-white/6" href={swapLocalePath(pathname, 'en')} aria-label={navLabels.switchLanguage}>EN</a>
+            <a class="rounded-full border border-white/10 px-3 py-1.5 hover:bg-white/6" href={swapLocalePath(pathname, 'pt')} aria-label={navLabels.switchLanguage}>PT</a>
           </nav>
         </div>
       </header>
@@ -40,8 +74,9 @@ const {
         <slot />
       </main>
       <footer class="border-t border-white/10">
-        <div class="mx-auto max-w-6xl px-6 py-6 text-sm text-neutral-400">
-          Foundation and content architecture in progress.
+        <div class="page-container flex flex-col gap-3 px-6 py-6 text-sm text-neutral-400 md:flex-row md:items-center md:justify-between">
+          <p>{navLabels.footer}</p>
+          <a class="text-neutral-500" href={alternatePath}>{alternateLocale.toUpperCase()}</a>
         </div>
       </footer>
     </div>

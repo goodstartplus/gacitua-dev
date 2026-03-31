@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectLayout from '../../../layouts/ProjectLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+import { getRelatedProjects } from '../../../utils/projects';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => !data.draft && data.locale === 'en');
+  console.log('[routes] en project static paths', projects.map((project) => project.data.slug));
+  return projects.map((project) => ({ params: { slug: project.data.slug }, props: { project } }));
+}
+
+const { project } = Astro.props as { project: CollectionEntry<'projects'> & { Content?: any } };
+const backHref = '/en/#featured-projects';
+const relatedProjects = await getRelatedProjects('en', project.data.slug);
+const { Content } = await render(project);
+
+console.log('[page] /en/projects/[slug]', {
+  slug: project.data.slug,
+  related: relatedProjects.map((item) => item.data.slug),
+});
+---
+
+<ProjectLayout project={project} locale="en" backHref={backHref} relatedProjects={relatedProjects}>
+  <Content />
+</ProjectLayout>

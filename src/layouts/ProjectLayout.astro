@@ -1,0 +1,129 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from './BaseLayout.astro';
+import { ui } from '../utils/i18n';
+import ProjectCard from '../components/astro/ProjectCard.astro';
+
+interface Props {
+  project: any;
+  locale: 'en' | 'pt';
+  backHref: string;
+  relatedProjects?: any[];
+}
+
+const { project, locale, backHref, relatedProjects = [] } = Astro.props;
+
+const labels = ui[locale].project;
+const relatedLabel = locale === 'pt' ? 'Projetos relacionados' : 'Related projects';
+const galleryLabel = locale === 'pt' ? 'Galeria' : 'Gallery';
+---
+
+<BaseLayout lang={locale} title={`${project.data.title} — gacitua.dev`} description={project.data.summary} ogImage={project.data.coverImage}>
+  <section class="page-container section-spacing px-6 pt-12 md:pt-16">
+    <a href={backHref} class="pill">{labels.back}</a>
+
+    <div class="mt-6 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+      <div>
+        <p class="eyebrow">{project.data.type}</p>
+        <h1 class="display-title mt-4 max-w-4xl text-white">{project.data.title}</h1>
+        <p class="body-large mt-6 max-w-3xl">{project.data.summary}</p>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+        <div class="stat-card">
+          <span class="stat-label">{labels.status}</span>
+          <span class="stat-value mt-2">{project.data.status}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">{labels.year}</span>
+          <span class="stat-value mt-2">{project.data.year}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-container px-6 pb-6">
+    <div class="surface-panel overflow-hidden rounded-[2rem]">
+      <div class="relative aspect-[16/9] bg-black">
+        <Image src={project.data.coverImage} alt={project.data.title} width={1800} height={1200} class="h-full w-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+      </div>
+    </div>
+  </section>
+
+  {project.data.gallery?.length > 0 && (
+    <section class="page-container px-6 pb-6">
+      <p class="eyebrow mb-6">{galleryLabel}</p>
+      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {project.data.gallery.map((image: string, index: number) => (
+          <div class="surface-panel overflow-hidden rounded-[1.5rem]">
+            <div class="relative aspect-[4/3] bg-black">
+              <Image src={image} alt={`${project.data.title} gallery ${index + 1}`} width={1600} height={1200} class="h-full w-full object-cover" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="page-container section-spacing px-6 pt-6">
+    <div class="grid gap-6 lg:grid-cols-[1fr_0.8fr]">
+      <article class="surface-panel rounded-[2rem] p-6 md:p-8">
+        <p class="eyebrow">{labels.summary}</p>
+        <div class="prose prose-invert mt-6 max-w-none prose-p:text-neutral-300 prose-p:leading-8 prose-headings:text-white prose-headings:tracking-tight prose-headings:font-semibold prose-strong:text-white prose-ul:text-neutral-300">
+          <slot />
+        </div>
+      </article>
+
+      <aside class="grid gap-6">
+        <div class="surface-panel rounded-[2rem] p-6 md:p-8">
+          <p class="eyebrow">{labels.stack}</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {project.data.stack.map((item: string) => (
+              <span class="pill">{item}</span>
+            ))}
+          </div>
+        </div>
+
+        <div class="surface-panel rounded-[2rem] p-6 md:p-8">
+          <p class="eyebrow">{labels.tags}</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {project.data.tags.map((item: string) => (
+              <span class="pill">{item}</span>
+            ))}
+          </div>
+        </div>
+
+        <div class="surface-panel rounded-[2rem] p-6 md:p-8">
+          <div class="grid gap-4 text-sm text-neutral-300">
+            <div>
+              <p class="eyebrow">{labels.type}</p>
+              <p class="mt-2">{project.data.type}</p>
+            </div>
+            <div>
+              <p class="eyebrow">{labels.category}</p>
+              <p class="mt-2">{project.data.clientOrPersonal}</p>
+            </div>
+          </div>
+
+          {project.data.externalUrl && (
+            <div class="mt-6">
+              <a href={project.data.externalUrl} target="_blank" rel="noreferrer" class="action-link action-link-primary">
+                {labels.external}
+              </a>
+            </div>
+          )}
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {relatedProjects.length > 0 && (
+    <section class="page-container section-spacing px-6 pt-0">
+      <p class="eyebrow">{relatedLabel}</p>
+      <div class="mt-6 grid-instagram">
+        {relatedProjects.map((item) => <ProjectCard project={item} />)}
+      </div>
+    </section>
+  )}
+</BaseLayout>

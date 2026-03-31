@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/astro/SectionHeading.astro';
+import { ui } from '../../utils/i18n';
+
+const page = ui.en.pages.about;
+---
+
+<BaseLayout lang="en" title={page.title} description={page.description}>
+  <section class="page-container section-spacing px-6 pt-14">
+    <SectionHeading eyebrow={page.eyebrow} title={page.heading} description={page.description} />
+    <div class="mt-10 grid gap-6 lg:grid-cols-2">
+      {page.blocks.map((block) => (
+        <article class="surface-panel rounded-[2rem] p-6 md:p-8">
+          <p class="body-copy">{block}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

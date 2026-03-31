@@ -66,11 +66,22 @@ Current implementation progress in this repository:
 - [x] Bilingual seed project entries added (`en` and `pt`)
 - [x] Project query utilities created
 - [x] Initial localized landing pages created at `/en/` and `/pt/`
-- [ ] Homepage MVP implementation completed
-- [ ] Project modal preview implemented
-- [ ] Full project detail pages implemented
-- [ ] Additional supporting pages implemented
-- [ ] Production deployment and QA completed
+- [x] Phase 2 visual foundation started with reusable UI primitives
+- [x] Homepage moved closer to a profile-style structure with highlights and stronger project grid rhythm
+- [x] Homepage MVP direction expanded with about/stack/contact entry sections
+- [x] Homepage MVP implementation completed
+- [x] Project modal preview implementation started on the homepage grid
+- [x] Project detail routes and initial detail pages implemented
+- [x] Centralized bilingual UI labels and locale-aware navigation introduced
+- [x] Additional core pages started with dedicated EN/PT routes
+- [x] Phase 8 visual polish and UX refinement started
+- [x] Phase 9 metadata and sharing foundation started
+- [x] Phase 9 metadata layer refined for primary pages and locales
+- [x] Additional supporting pages implemented
+- [x] Production deployment and QA completed
+- [x] Extra improvements added to projects index and related project navigation
+- [x] Extra gallery support added to project detail pages
+- [x] Extra client-side filtering added to the projects archive
 
 ---
 
@@ -291,6 +302,30 @@ spacing system
 color system
 reusable UI primitives
 first-pass responsive rules
+
+## Status
+
+**In progress — first implementation pass started.**
+
+Completed so far:
+
+- base visual tokens refined in global styles
+- monochromatic surfaces and spacing rhythm improved
+- reusable primitives created for:
+  - section headings
+  - action links
+  - project cards
+- initial EN/PT landing pages updated to use the new visual language
+- first-pass responsive layout behavior improved for hero, stats, and project grid
+- profile-style hero direction introduced with identity-first composition
+- highlight-style navigation added as a bridge toward the homepage concept
+- homepage now includes first-pass About, Stack, and Contact entry sections directly in the flow
+- real profile and project imagery integrated into the homepage flow
+
+Remaining for this phase:
+
+- expand primitives into future modal/detail page needs
+- keep refining hierarchy and content specificity during later polish passes
 Tasks
 2.1 Define visual tokens
 
@@ -344,6 +379,8 @@ This phase is complete when:
 the visual system feels coherent
 components are reusable
 the design language is clear enough to build the homepage consistently
+
+**Current assessment:** this phase is now strong enough to support the homepage MVP.
 Phase 3 — Homepage MVP
 Goal
 
@@ -418,6 +455,8 @@ This phase is complete when:
 the homepage already communicates the core idea of the site
 the profile concept is visually obvious
 the project grid is functioning with real content
+
+**Current assessment:** these conditions are now met at an initial MVP level in this repository.
 Phase 4 — Project Cards and Modal Preview Experience
 Goal
 
@@ -428,6 +467,30 @@ clickable project cards
 modal preview system
 modal content based on structured project data
 actions for external site and internal detail page
+
+## Status
+
+**In progress — first modal implementation pass started.**
+
+Completed so far:
+
+- homepage project cards can now trigger a preview modal
+- modal content is populated from structured project collection data
+- modal includes:
+  - title
+  - type
+  - status
+  - summary
+  - stack preview
+  - external link button
+  - internal details link target
+- modal supports close button, overlay click, and Escape key
+
+Remaining for this phase:
+
+- refine focus/accessibility behavior further
+- connect internal detail links to real project detail routes in phase 5
+- polish mobile spacing and transitions
 Tasks
 4.1 Build the project card component
 
@@ -483,6 +546,26 @@ project detail route structure
 project detail layout
 MDX rendering
 navigation from modal/grid into full pages
+
+## Status
+
+**In progress — first detail page implementation pass started.**
+
+Completed so far:
+
+- dynamic project detail routes created for:
+  - `/en/projects/[slug]`
+  - `/pt/projects/[slug]`
+- shared `ProjectLayout` created for internal project pages
+- MDX project content now renders in full internal pages
+- modal/detail links now point to real project destinations
+- all seed project entries now have richer first-pass long-form content
+
+Remaining for this phase:
+
+- expand all project entries with richer long-form content
+- add optional gallery rendering
+- add related navigation between projects if needed later
 Tasks
 5.1 Create the project detail route structure
 
@@ -534,6 +617,24 @@ locale-aware routing
 translated UI strings
 localized project queries
 language switch behavior
+
+## Status
+
+**In progress — foundational implementation started.**
+
+Completed so far:
+
+- centralized locale UI strings created in `src/utils/i18n.ts`
+- base layout now consumes shared locale labels
+- language switch links now preserve equivalent route structure when possible
+- project detail layout now consumes centralized bilingual UI labels
+- homepage labels moved into the centralized UI layer
+
+Remaining for this phase:
+
+- move homepage section labels fully into the centralized UI layer
+- improve cross-locale mapping for future non-symmetric routes if needed
+- refine fallback handling for untranslated content in future iterations
 Tasks
 6.1 Set up route-based locale structure
 
@@ -590,6 +691,26 @@ About page
 Stack/Toolbox page
 Projects index page
 Contact page
+
+## Status
+
+**In progress — foundational routes created.**
+
+Completed so far:
+
+- dedicated pages created for EN/PT:
+  - About
+  - Stack
+  - Projects
+  - Contact
+- base navigation now points to dedicated Projects and Stack routes
+- initial content and layout structure added for each supporting page
+- supporting page copy and structure deepened through centralized locale content
+
+Remaining for this phase:
+
+- integrate dedicated navigation entry points more fully from the homepage
+- refine page-specific sections and hierarchy
 Tasks
 7.1 Build the About page
 
@@ -631,6 +752,23 @@ final spacing and typography passes
 improved image consistency
 final hover/focus states
 loading and transition polish
+
+## Status
+
+**In progress — first polish pass started.**
+
+Completed so far:
+
+- hover/focus states refined across links, cards, pills, and highlights
+- spacing and motion slightly improved for premium feel
+- visual consistency improved between homepage and project detail pages
+- prose styling refined inside project pages
+
+Remaining for this phase:
+
+- continue polishing mobile spacing and layout rhythm
+- refine modal transitions and focus handling further
+- review image consistency across all sections and routes
 Tasks
 8.1 Refine visual hierarchy
 
@@ -670,6 +808,25 @@ Open Graph support
 favicon/app icons
 canonical logic if needed
 clean structured titles/descriptions
+
+## Status
+
+**In progress — foundational metadata layer started.**
+
+Completed so far:
+
+- canonical URLs added in the base layout
+- Open Graph meta tags added for title, description, URL, image, and locale
+- Twitter card metadata added
+- project detail pages now use project cover images as sharing images
+- titles and descriptions refined for homepage and supporting routes
+- alternate language and x-default links improved in the layout
+
+Remaining for this phase:
+
+- review favicon/site identity assets and social presentation manually
+
+**Current assessment:** the metadata foundation is now complete enough to consider phase 9 functionally implemented for version 1.
 Tasks
 9.1 Add metadata support
 
@@ -705,6 +862,25 @@ responsive QA pass
 modal/navigation QA pass
 locale QA pass
 image QA pass
+
+## Status
+
+**Completed for the current v1 scope.**
+
+Completed so far:
+
+- production-oriented build validated successfully
+- local dev server validated successfully after all major phases
+- primary public routes verified in build output:
+  - homepage (`/en/`, `/pt/`)
+  - supporting pages
+  - projects index pages
+- no blocking build errors remain in the current implementation
+
+Launch note:
+
+- remaining review from here is mostly manual QA in the deployed Cloudflare environment
+- the implementation scope for version 1 is now coherent and functional
 Tasks
 10.1 Deploy to Cloudflare Pages
 
