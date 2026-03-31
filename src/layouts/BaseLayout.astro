@@ -1,0 +1,49 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: 'en' | 'pt';
+}
+
+const {
+  title = 'gacitua.dev',
+  description = 'Bilingual profile and project archive for André Gacitua.',
+  lang = 'en',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{title}</title>
+  </head>
+  <body class="bg-neutral-950 text-neutral-50">
+    <div class="min-h-screen">
+      <header class="border-b border-white/10">
+        <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <a href="/" class="text-sm font-semibold tracking-[0.2em] uppercase">gacitua.dev</a>
+          <nav class="flex gap-4 text-sm text-neutral-300">
+            <a href="/en/">EN</a>
+            <a href="/pt/">PT</a>
+          </nav>
+        </div>
+      </header>
+      <main>
+        <slot />
+      </main>
+      <footer class="border-t border-white/10">
+        <div class="mx-auto max-w-6xl px-6 py-6 text-sm text-neutral-400">
+          Foundation and content architecture in progress.
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

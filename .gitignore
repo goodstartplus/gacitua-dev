@@ -5,6 +5,8 @@ dist/
 
 # dependencies
 node_modules/
+.wrangler/
+opposite-orbit/
 
 # logs
 npm-debug.log*

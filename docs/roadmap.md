@@ -50,6 +50,30 @@ This roadmap intentionally avoids overengineering in the first release.
 
 ---
 
+## Implementation Status Update
+
+Current implementation progress in this repository:
+
+- [x] Astro project initialized in the repository root
+- [x] TypeScript strict base enabled
+- [x] MDX configured
+- [x] React integration added for future islands
+- [x] Cloudflare adapter configured
+- [x] Tailwind v4 integrated through Vite
+- [x] Global base layout created
+- [x] Global stylesheet initialized
+- [x] Content Collections configured
+- [x] Bilingual seed project entries added (`en` and `pt`)
+- [x] Project query utilities created
+- [x] Initial localized landing pages created at `/en/` and `/pt/`
+- [ ] Homepage MVP implementation completed
+- [ ] Project modal preview implemented
+- [ ] Full project detail pages implemented
+- [ ] Additional supporting pages implemented
+- [ ] Production deployment and QA completed
+
+---
+
 # Phase 0 — Project Foundation
 
 ## Goal
@@ -67,6 +91,27 @@ Create the project foundation and lock in the architecture before building UI.
 - base layout in place
 - global styles initialized
 - deployment target prepared for Cloudflare Pages
+
+## Status
+
+**In progress — mostly completed in this repository.**
+
+Completed so far:
+
+- Astro initialized in the repository root
+- strict TypeScript base in place
+- MDX integration added
+- React integration added
+- Cloudflare adapter configured
+- Tailwind v4 connected through Vite
+- base layout created
+- global stylesheet created
+- initial localized routes created
+
+Remaining for this phase:
+
+- refine folder structure further as components/pages grow
+- optionally add Cloudflare bindings/config files when deployment setup begins
 
 ## Tasks
 
@@ -117,6 +162,10 @@ Prepare the project to deploy to Cloudflare Pages.
 
 No custom backend should be introduced at this stage.
 
+### Phase 0 implementation note
+
+The project uses the Cloudflare adapter already, which prepares the codebase for the deployment target. Full deployment configuration and publish validation are intentionally deferred to a later phase.
+
 Exit Criteria
 
 This phase is complete when:
@@ -136,6 +185,33 @@ project collection schema
 locale strategy
 sample content entries
 helper functions for querying projects
+
+## Status
+
+**In progress — core implementation completed.**
+
+Completed so far:
+
+- typed `projects` collection schema created
+- locale field and bilingual structure defined
+- separate project entries created for English and Portuguese
+- seed entries added for:
+  - Goodstart+
+  - Sideout
+  - Detalhe de Festa
+  - WhatsApp Automation
+  - Teacher Platform
+- content utility functions implemented for:
+  - projects by locale
+  - featured projects
+  - project by slug + locale
+  - projects by type
+
+Remaining for this phase:
+
+- refine schema as real project content gets richer
+- add project detail routes that consume the same content source
+- replace placeholder image paths with real assets
 Tasks
 1.1 Define the project schema
 

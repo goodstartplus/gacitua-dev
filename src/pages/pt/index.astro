@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getFeaturedProjects } from '../../utils/projects';
+
+const featuredProjects = await getFeaturedProjects('pt');
+---
+
+<BaseLayout
+  lang="pt"
+  title="gacitua.dev — Fundação"
+  description="Base inicial do perfil bilíngue de projetos de André Gacitua."
+>
+  <section class="mx-auto max-w-6xl px-6 py-16">
+    <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-400">Fase 0 / 1</p>
+    <h1 class="max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-6xl">
+      Uma fundação estruturada para um perfil bilíngue de builder.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg leading-8 text-neutral-300">
+      Esta implementação inicial configura Astro, MDX, preparação para ilhas React, suporte a deploy na Cloudflare
+      e um modelo tipado de conteúdo para projetos.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 pb-16">
+    <div class="mb-6 flex items-center justify-between">
+      <h2 class="text-2xl font-semibold">Projetos iniciais em destaque</h2>
+      <span class="text-sm text-neutral-400">{featuredProjects.length} itens</span>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      {featuredProjects.map((project) => (
+        <article class="rounded-2xl border border-white/10 bg-white/5 p-5">
+          <p class="text-xs uppercase tracking-[0.24em] text-neutral-400">{project.data.type}</p>
+          <h3 class="mt-3 text-xl font-semibold text-white">{project.data.title}</h3>
+          <p class="mt-3 text-sm leading-7 text-neutral-300">{project.data.shortDescription}</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {project.data.tags.map((tag) => (
+              <span class="rounded-full border border-white/10 px-3 py-1 text-xs text-neutral-300">{tag}</span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
