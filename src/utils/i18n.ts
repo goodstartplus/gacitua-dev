@@ -11,12 +11,13 @@ export const ui = {
       switchLanguage: 'Switch language',
     },
     home: {
-      heroEyebrow: 'André Gacitua · builder profile',
-      heroTitle: 'I build digital products, systems, websites, and practical tools that need to work in the real world.',
+      heroEyebrow: 'André Gacitua · Product Builder',
+      heroHeading: 'I design and ship digital products',
+      heroTitle: 'I design and ship digital products with clarity, speed, and practical execution.',
       heroDescription:
-        'This site is a bilingual public profile of execution: product thinking, interface direction, implementation detail, and a growing archive of projects spanning platforms, apps, automations, and internal tools.',
+        'I work across product direction, interface design, and implementation to turn ideas into websites, platforms, automations, and internal tools that are useful outside the mockup.',
       heroPrimary: 'View featured work',
-      heroSecondary: 'Browse the profile',
+      heroSecondary: 'Learn more about me',
       highlightEyebrow: 'Ways to explore',
       highlightTitle: 'A profile-first archive of work, capabilities, and product direction.',
       highlightDescription:
@@ -118,12 +119,13 @@ export const ui = {
       switchLanguage: 'Trocar idioma',
     },
     home: {
-      heroEyebrow: 'André Gacitua · perfil de builder',
-      heroTitle: 'Eu construo produtos digitais, sistemas, websites e ferramentas práticas que precisam funcionar no mundo real.',
+      heroEyebrow: 'André Gacitua · Builder de Produto',
+      heroHeading: 'Desenvolvo e entrego produtos digitais',
+      heroTitle: 'Eu desenho e entrego produtos digitais com clareza, velocidade e execução prática.',
       heroDescription:
-        'Este site é um perfil público bilíngue de execução: pensamento de produto, direção de interface, detalhe de implementação e um arquivo crescente de projetos entre plataformas, apps, automações e ferramentas internas.',
+        'Atuo entre direção de produto, interface e implementação para transformar ideias em websites, plataformas, automações e ferramentas internas que funcionam além do layout.',
       heroPrimary: 'Ver trabalhos em destaque',
-      heroSecondary: 'Explorar o perfil',
+      heroSecondary: 'Conhecer meu perfil',
       highlightEyebrow: 'Formas de explorar',
       highlightTitle: 'Um arquivo orientado a perfil para navegar por trabalho, repertório e direção de produto.',
       highlightDescription:

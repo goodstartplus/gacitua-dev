@@ -1,19 +1,21 @@
 ---
 import { Image } from 'astro:assets';
 import ActionLink from '../../components/astro/ActionLink.astro';
+import SocialLinks from '../../components/astro/SocialLinks.astro';
 import ProjectCard from '../../components/astro/ProjectCard.astro';
 import SectionHeading from '../../components/astro/SectionHeading.astro';
 import ProjectPreviewModal from '../../components/react/ProjectPreviewModal';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { ui } from '../../utils/i18n';
-import { getFeaturedProjects } from '../../utils/projects';
+import { getFeaturedProjects, getProjectsByLocale } from '../../utils/projects';
 
+const allProjects = await getProjectsByLocale('en');
 const featuredProjects = await getFeaturedProjects('en');
 const home = ui.en.home;
 const stats = [
-  { value: '05', label: home.statLabels[0] },
-  { value: '02', label: home.statLabels[1] },
-  { value: '06', label: home.statLabels[2] },
+  { value: '06', label: 'Completed', dot: '#4ade80' },
+  { value: '02', label: 'In progress', dot: '#facc15' },
+  { value: '02', label: 'Planned', dot: '#6b7280' },
 ];
 
 const highlightItems = home.highlightItems;
@@ -25,7 +27,7 @@ const profileActions = [
   { href: '/en/contact', label: home.profileActions[3] },
 ];
 
-const modalProjects = featuredProjects.map((project) => ({
+const modalProjects = allProjects.map((project) => ({
   title: project.data.title,
   slug: project.data.slug,
   type: project.data.type,
@@ -43,72 +45,62 @@ const modalProjects = featuredProjects.map((project) => ({
 
 <BaseLayout
   lang="en"
-  title="André Gacitua — Builder Profile and Projects"
-  description="Bilingual homepage for André Gacitua, presenting real digital products, systems, websites, automations, and a profile-first project archive."
+  title="André Santiago — Builder Profile and Projects"
+  description="Bilingual homepage for André Santiago, presenting real digital products, systems, websites, automations, and a profile-first project archive."
 >
-  <section class="page-container section-spacing px-6 pt-12 md:pt-20">
-    <div class="surface-panel rounded-[2rem] p-6 md:p-10">
-      <div class="grid gap-10 lg:grid-cols-[0.34fr_1fr_0.7fr] lg:items-end">
-        <div class="flex flex-col items-start gap-4">
-          <div class="profile-avatar overflow-hidden">
-            <Image
-              src="/images/profile/andre-gacitua.jpeg"
-              alt="André Gacitua"
-              width={1200}
-              height={1200}
-              class="h-full w-full object-cover"
-            />
-          </div>
-          <div class="flex flex-wrap gap-2">
-            {profileMeta.map((item) => (
-              <span class="pill">{item}</span>
-            ))}
+  <section class="page-container section-spacing px-6 pt-6 md:pt-20">
+    <div class="surface-panel hero-shell md:rounded-[2rem] md:p-10">
+      <div class="hero-simple-layout">
+        <div class="hero-simple-top">
+          <div class="hero-identity">
+            <div class="profile-avatar hero-profile-avatar overflow-hidden">
+              <Image
+                src="/images/profile/andre-gacitua.jpeg"
+                alt="André Gacitua"
+                width={1200}
+                height={1200}
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div>
+              <p class="eyebrow">{home.heroEyebrow}</p>
+              <h1 class="hero-name hero-name-large mt-3 text-white">{home.heroHeading}</h1>
+              <div class="hero-stats hero-stats-inline hero-stats-simple hero-stats-under-name mt-6 grid grid-cols-3 gap-4">
+                {stats.map((stat) => (
+                  <div class="stat-card">
+                    <span class="stat-value">{stat.value}</span>
+                    <span class="stat-label">
+                      <span class="stat-dot" style={`background: ${stat.dot}`} />
+                      {stat.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
-        <div>
-          <p class="eyebrow">{home.heroEyebrow}</p>
-          <h1 class="display-title mt-5 max-w-4xl text-white">{home.heroTitle}</h1>
-          <p class="body-large mt-6 max-w-2xl">{home.heroDescription}</p>
+        <div class="hero-main">
+          <p class="body-large hero-description hero-description-simple text-white/90">
+            {home.heroDescription}
+          </p>
 
-          <div class="mt-8 flex flex-wrap gap-3">
-            <ActionLink href="/en/projects/" variant="primary" label={home.heroPrimary} />
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <SocialLinks />
             <ActionLink href="/en/about" variant="secondary" label={home.heroSecondary} />
           </div>
         </div>
-
-        <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-          {stats.map((stat) => (
-            <div class="stat-card">
-              <span class="stat-value">{stat.value}</span>
-              <span class="stat-label">{stat.label}</span>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   </section>
 
-  <section id="profile-highlights" class="page-container px-6 pb-6">
-    <div class="surface-panel rounded-[2rem] p-6 md:p-8">
-      <div class="mb-6 flex items-end justify-between gap-4">
-        <SectionHeading
-          eyebrow={home.highlightEyebrow}
-          title={home.highlightTitle}
-          description={home.highlightDescription}
-        />
-      </div>
-
-      <div class="flex gap-4 overflow-x-auto pb-2">
-        {highlightItems.map((item, index) => (
-          <a href={index === 0 ? '/en/projects/' : index === 1 ? '/en/projects/' : index === 2 ? '/en/projects/' : index === 3 ? '/en/projects/' : '/en/about'} class="highlight-chip">
-            <div class="highlight-orb">{item.slice(0, 2).toUpperCase()}</div>
-            <span class="text-sm text-neutral-300">{item}</span>
-          </a>
-        ))}
-      </div>
+  <section class="page-container px-6 pb-2">
+    <h2 class="mb-6 text-2xl font-semibold tracking-tight text-white">Projects</h2>
+    <div class="grid-instagram">
+      {allProjects.map((project) => <ProjectCard project={project} modalEnabled />)}
     </div>
   </section>
+
 
   <section id="design-foundation" class="page-container section-spacing px-6 pb-6">
     <SectionHeading
